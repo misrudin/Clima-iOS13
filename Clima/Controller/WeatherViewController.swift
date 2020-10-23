@@ -36,6 +36,9 @@ class WeatherViewController: UIViewController {
     @IBAction func searchButton(_ sender: Any) {
         searchField.endEditing(true)
     }
+    @IBAction func myLocationButton(_ sender: Any) {
+        locationManager.requestLocation()
+    }
     
 }
 
@@ -89,8 +92,11 @@ extension WeatherViewController: WeatherManagerDelegate {
 extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
+            locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
+            
+          wheaterManager.fethWheater(latitude: lat, longitude: long)
         }
     }
     
